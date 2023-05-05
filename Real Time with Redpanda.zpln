@@ -1112,9 +1112,9 @@
       "$$hashKey": "object:193"
     },
     {
-      "text": "%flink.ssql\nSELECT route_id, route_long_name, start_time,trip_id, stop_id, stop_name, stop_lat, stop_lon, current_status, pos_timestamp, feed_timestamp\nFROM (\n  SELECT *,\n    ROW_NUMBER() OVER (PARTITION BY trip_id, route_id ORDER BY feed_timestamp DESC) AS row_num\n  FROM mta_ace_flat)\nWHERE row_num <= 3 AND route_id = 'A' AND trip_id = '044850_A..N'\n",
+      "text": "%flink.ssql\nSELECT route_id, route_long_name, start_time,trip_id, stop_id, stop_name, stop_lat, stop_lon, current_status, pos_timestamp, feed_timestamp\nFROM (\n  SELECT *,\n    ROW_NUMBER() OVER (PARTITION BY trip_id, route_id ORDER BY pos_timestamp DESC) AS row_num\n  FROM mta_ace_flat WHERE route_id= 'A' AND pos_timestamp >= LOCALTIMESTAMP - INTERVAL '5' MINUTE AND pos_timestamp <= LOCALTIMESTAMP)\nWHERE row_num <= 3;\n",
       "user": "anonymous",
-      "dateUpdated": "2023-05-05T15:18:59+0200",
+      "dateUpdated": "2023-05-05T15:48:48+0200",
       "progress": 0,
       "config": {
         "editorSetting": {
@@ -1129,15 +1129,15 @@
         "results": {
           "0": {
             "graph": {
-              "mode": "table",
-              "height": 300,
-              "optionOpen": false,
+              "mode": "zeppelin-leaflet",
+              "height": 1011.41,
+              "optionOpen": true,
               "setting": {
                 "table": {
                   "tableGridState": {
                     "columns": [
                       {
-                        "name": "entity_id0",
+                        "name": "route_id0",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1147,7 +1147,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "trip_id1",
+                        "name": "route_long_name1",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1157,7 +1157,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "route_id2",
+                        "name": "start_time2",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1167,7 +1167,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "route_long_name3",
+                        "name": "trip_id3",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1177,7 +1177,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "start_time4",
+                        "name": "stop_id4",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1187,7 +1187,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "schedule_relation5",
+                        "name": "stop_name5",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1197,7 +1197,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "id6",
+                        "name": "stop_lat6",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1207,7 +1207,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "label7",
+                        "name": "stop_lon7",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1217,7 +1217,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "license_plate8",
+                        "name": "current_status8",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1227,7 +1227,7 @@
                         "pinned": ""
                       },
                       {
-                        "name": "lon9",
+                        "name": "pos_timestamp9",
                         "visible": true,
                         "width": "*",
                         "sort": {},
@@ -1237,143 +1237,13 @@
                         "pinned": ""
                       },
                       {
-                        "name": "lat10",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "bearing11",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "speed12",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "odometer13",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "stop_id14",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "stop_name15",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "stop_lat16",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "stop_lon17",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "current_status18",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "pos_timestamp19",
+                        "name": "feed_timestamp10",
                         "visible": true,
                         "width": "*",
                         "sort": {
                           "priority": 0,
                           "direction": "desc"
                         },
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "congestion_level20",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "occupancy_status21",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "feed_timestamp22",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
-                        "filters": [
-                          {}
-                        ],
-                        "pinned": ""
-                      },
-                      {
-                        "name": "row_num23",
-                        "visible": true,
-                        "width": "*",
-                        "sort": {},
                         "filters": [
                           {}
                         ],
@@ -1421,17 +1291,17 @@
                 "zeppelin-leaflet": {
                   "latitude": {
                     "name": "stop_lat",
-                    "index": 5,
+                    "index": 6,
                     "aggr": "sum"
                   },
                   "longitude": {
                     "name": "stop_lon",
-                    "index": 6,
+                    "index": 7,
                     "aggr": "sum"
                   },
                   "tooltip": {
                     "name": "stop_name",
-                    "index": 4,
+                    "index": 5,
                     "aggr": "sum"
                   }
                 },
@@ -1477,8 +1347,8 @@
           "group": "flink",
           "values": [
             {
-              "jobUrl": "http://localhost:8081#/job/e319faafd5f41e06e3490f9e15ee4b85",
-              "$$hashKey": "object:77131"
+              "jobUrl": "http://localhost:8081#/job/41229c0c2cbc8285c64058a631e9293a",
+              "$$hashKey": "object:129667"
             }
           ],
           "interpreterSettingId": "flink"
@@ -1488,18 +1358,18 @@
       "jobName": "paragraph_1683291499180_113530390",
       "id": "paragraph_1683230862961_1243471336",
       "dateCreated": "2023-05-05T14:58:19+0200",
-      "dateStarted": "2023-05-05T15:18:58+0200",
+      "dateStarted": "2023-05-05T15:47:30+0200",
       "status": "RUNNING",
       "$$hashKey": "object:194",
       "results": {
         "msg": [
           {
-            "data": "route_id\troute_long_name\tstart_time\ttrip_id\tstop_id\tstop_name\tstop_lat\tstop_lon\tcurrent_status\tpos_timestamp\tfeed_timestamp\nA\t8 Avenue Express\t2023-05-05 11:28:30.000000\t044850_A..N\tA03N\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:16:37.000\t2023-05-05 15:16:52.000\nA\t8 Avenue Express\t2023-05-05 11:28:30.000000\t044850_A..N\tA03N\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:16:52.000\t2023-05-05 15:17:03.000\nA\t8 Avenue Express\t2023-05-05 11:28:30.000000\t044850_A..N\tA02N\tInwood-207 St\t40.868072\t-73.919899\tSTOPPED_AT\t2023-05-05 15:17:03.000\t2023-05-05 15:17:13.000\n",
+            "data": "route_id\troute_long_name\tstart_time\ttrip_id\tstop_id\tstop_name\tstop_lat\tstop_lon\tcurrent_status\tpos_timestamp\tfeed_timestamp\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:42:47.000\t2023-05-05 15:43:06.000\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:42:47.000\t2023-05-05 15:43:16.000\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:42:47.000\t2023-05-05 15:43:26.000\nA\t8 Avenue Express\t2023-05-05 12:04:30.000000\t048450_A..S\tH03S\tHoward Beach-JFK Airport\t40.660476\t-73.830301\tSTOPPED_AT\t2023-05-05 15:44:12.000\t2023-05-05 15:44:26.000\nA\t8 Avenue Express\t2023-05-05 12:04:30.000000\t048450_A..S\tH03S\tHoward Beach-JFK Airport\t40.660476\t-73.830301\tSTOPPED_AT\t2023-05-05 15:44:12.000\t2023-05-05 15:44:44.000\nA\t8 Avenue Express\t2023-05-05 12:04:30.000000\t048450_A..S\tH03S\tHoward Beach-JFK Airport\t40.660476\t-73.830301\tSTOPPED_AT\t2023-05-05 15:44:12.000\t2023-05-05 15:44:54.000\nA\t8 Avenue Express\t2023-05-05 13:27:00.000000\t056700_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:44:47.000\t2023-05-05 15:45:04.000\nA\t8 Avenue Express\t2023-05-05 13:27:00.000000\t056700_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:44:47.000\t2023-05-05 15:45:16.000\nA\t8 Avenue Express\t2023-05-05 13:27:00.000000\t056700_A..S\tA15S\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:44:47.000\t2023-05-05 15:45:26.000\nA\t8 Avenue Express\t2023-05-05 11:59:00.000000\t047900_A..N\tA02N\tInwood-207 St\t40.868072\t-73.919899\tSTOPPED_AT\t2023-05-05 15:45:43.000\t2023-05-05 15:46:06.000\nA\t8 Avenue Express\t2023-05-05 11:59:00.000000\t047900_A..N\tA02N\tInwood-207 St\t40.868072\t-73.919899\tSTOPPED_AT\t2023-05-05 15:45:43.000\t2023-05-05 15:46:16.000\nA\t8 Avenue Express\t2023-05-05 11:59:00.000000\t047900_A..N\tA02N\tInwood-207 St\t40.868072\t-73.919899\tSTOPPED_AT\t2023-05-05 15:45:43.000\t2023-05-05 15:46:26.000\nA\t8 Avenue Express\t2023-05-05 13:47:40.000000\t058766_A..S\tA02S\tInwood-207 St\t40.868072\t-73.919899\tINCOMING_AT\t2023-05-05 15:47:40.000\t2023-05-05 15:47:36.000\nA\t8 Avenue Express\t2023-05-05 12:38:30.000000\t051850_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:47:47.000\t2023-05-05 15:48:05.000\nA\t8 Avenue Express\t2023-05-05 12:38:30.000000\t051850_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:47:47.000\t2023-05-05 15:48:15.000\nA\t8 Avenue Express\t2023-05-05 13:11:00.000000\t055100_A..S\tA32S\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:47:55.000\t2023-05-05 15:48:15.000\nA\t8 Avenue Express\t2023-05-05 12:22:00.000000\t050200_A..N\tA15N\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:48:10.000\t2023-05-05 15:48:26.000\nA\t8 Avenue Express\t2023-05-05 12:38:30.000000\t051850_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:47:47.000\t2023-05-05 15:48:26.000\nA\t8 Avenue Express\t2023-05-05 13:06:00.000000\t054600_A..N\tA32N\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:48:15.000\t2023-05-05 15:48:26.000\nA\t8 Avenue Express\t2023-05-05 13:04:00.000000\t054400_A..S\tA40S\tHigh St\t40.699337\t-73.990531\tSTOPPED_AT\t2023-05-05 15:48:10.000\t2023-05-05 15:48:26.000\nA\t8 Avenue Express\t2023-05-05 13:11:00.000000\t055100_A..S\tA32S\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:47:55.000\t2023-05-05 15:48:26.000\nA\t8 Avenue Express\t2023-05-05 12:10:32.000000\t049053_A..S\tA64S\t111 St\t40.684331\t-73.832163\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:21:00.000000\t050100_A..N\tA03N\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:16:30.000000\t049650_A..S\tA60S\t88 St\t40.679843\t-73.85147\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:31:02.000000\t051103_A..S\tA55S\tEuclid Av\t40.675377\t-73.872106\tSTOPPED_AT\t2023-05-05 15:48:22.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:23:31.000000\t050351_A..S\tA59S\t80 St\t40.679371\t-73.858992\tSTOPPED_AT\t2023-05-05 15:48:22.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:31:00.000000\t051100_A..N\tA05N\t190 St\t40.859022\t-73.93418\tSTOPPED_AT\t2023-05-05 15:48:28.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:54:00.000000\t053400_A..N\tA28N\t34 St-Penn Station\t40.752287\t-73.993391\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:52:00.000000\t053200_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:45:30.000000\t052550_A..S\tA49S\tRalph Av\t40.678822\t-73.920786\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:06:00.000000\t054600_A..N\tA32N\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:48:15.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:57:31.000000\t053751_A..S\tA42S\tHoyt-Schermerhorn Sts\t40.688484\t-73.985001\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:02:10.000000\t054216_A..N\tA48N\tUtica Av\t40.679364\t-73.930729\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:04:00.000000\t054400_A..S\tA40S\tHigh St\t40.699337\t-73.990531\tSTOPPED_AT\t2023-05-05 15:48:10.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:11:00.000000\t055100_A..S\tA32S\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:47:55.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:18:00.000000\t055800_A..N\tA41N\tJay St-MetroTech\t40.692338\t-73.987342\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:16:00.000000\t055600_A..S\tA31S\t14 St\t40.740893\t-74.00169\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..N\tA61N\tRockaway Blvd\t40.680429\t-73.843853\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:31:15.000000\t057125_A..S\tA09S\t168 St\t40.840719\t-73.939561\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:39:30.000000\t057950_A..N\tA57N\tGrant Av\t40.677044\t-73.86505\tSTOPPED_AT\t2023-05-05 15:48:30.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:39:00.000000\t057900_A..S\tA07S\t175 St\t40.847391\t-73.939704\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:47:39.000000\t058765_A..S\tA03S\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:28.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 13:43:00.000000\t058300_A..N\tH09N\tBeach 36 St\t40.595398\t-73.768175\tSTOPPED_AT\t2023-05-05 15:48:27.000\t2023-05-05 15:48:36.000\nA\t8 Avenue Express\t2023-05-05 12:10:32.000000\t049053_A..S\tA64S\t111 St\t40.684331\t-73.832163\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:22:00.000000\t050200_A..N\tA15N\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:16:30.000000\t049650_A..S\tA60S\t88 St\t40.679843\t-73.85147\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:21:00.000000\t050100_A..N\tA03N\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:31:02.000000\t051103_A..S\tA55S\tEuclid Av\t40.675377\t-73.872106\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:23:31.000000\t050351_A..S\tA59S\t80 St\t40.679371\t-73.858992\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:31:00.000000\t051100_A..N\tA05N\t190 St\t40.859022\t-73.93418\tSTOPPED_AT\t2023-05-05 15:48:41.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:42:00.000000\t052200_A..N\tA09N\t168 St\t40.840719\t-73.939561\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:42:00.000000\t052200_A..N\tA34N\tCanal St\t40.720824\t-74.005229\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:54:00.000000\t053400_A..N\tA28N\t34 St-Penn Station\t40.752287\t-73.993391\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:45:30.000000\t052550_A..S\tA49S\tRalph Av\t40.678822\t-73.920786\tSTOPPED_AT\t2023-05-05 15:48:37.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:52:00.000000\t053200_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:06:00.000000\t054600_A..N\tA32N\tW 4 St-Wash Sq\t40.732338\t-74.000495\tSTOPPED_AT\t2023-05-05 15:48:15.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:57:31.000000\t053751_A..S\tA42S\tHoyt-Schermerhorn Sts\t40.688484\t-73.985001\tSTOPPED_AT\t2023-05-05 15:48:35.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:02:10.000000\t054216_A..N\tA48N\tUtica Av\t40.679364\t-73.930729\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:04:00.000000\t054400_A..S\tA40S\tHigh St\t40.699337\t-73.990531\tSTOPPED_AT\t2023-05-05 15:48:10.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:18:00.000000\t055800_A..N\tA41N\tJay St-MetroTech\t40.692338\t-73.987342\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:16:00.000000\t055600_A..S\tA31S\t14 St\t40.740893\t-74.00169\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..N\tA61N\tRockaway Blvd\t40.680429\t-73.843853\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:31:15.000000\t057125_A..S\tA09S\t168 St\t40.840719\t-73.939561\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:39:00.000000\t057900_A..S\tA07S\t175 St\t40.847391\t-73.939704\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:39:30.000000\t057950_A..N\tA57N\tGrant Av\t40.677044\t-73.86505\tSTOPPED_AT\t2023-05-05 15:48:30.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:47:39.000000\t058765_A..S\tA03S\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:41.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 13:43:00.000000\t058300_A..N\tH08N\tBeach 44 St\t40.592943\t-73.776013\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:46.000\nA\t8 Avenue Express\t2023-05-05 12:10:32.000000\t049053_A..S\tA64S\t111 St\t40.684331\t-73.832163\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:22:00.000000\t050200_A..N\tA15N\t125 St\t40.811109\t-73.952343\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:16:30.000000\t049650_A..S\tA60S\t88 St\t40.679843\t-73.85147\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:21:00.000000\t050100_A..N\tA03N\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:31:02.000000\t051103_A..S\tA55S\tEuclid Av\t40.675377\t-73.872106\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:23:31.000000\t050351_A..S\tA59S\t80 St\t40.679371\t-73.858992\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:31:00.000000\t051100_A..N\tA05N\t190 St\t40.859022\t-73.93418\tSTOPPED_AT\t2023-05-05 15:48:41.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:42:00.000000\t052200_A..N\tA09N\t168 St\t40.840719\t-73.939561\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:54:00.000000\t053400_A..N\tA28N\t34 St-Penn Station\t40.752287\t-73.993391\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:45:30.000000\t052550_A..S\tA49S\tRalph Av\t40.678822\t-73.920786\tSTOPPED_AT\t2023-05-05 15:48:37.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:52:00.000000\t053200_A..S\tA51S\tBroadway Junction\t40.678334\t-73.905316\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 12:57:31.000000\t053751_A..S\tA42S\tHoyt-Schermerhorn Sts\t40.688484\t-73.985001\tSTOPPED_AT\t2023-05-05 15:48:35.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:02:10.000000\t054216_A..N\tA48N\tUtica Av\t40.679364\t-73.930729\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:18:00.000000\t055800_A..N\tA41N\tJay St-MetroTech\t40.692338\t-73.987342\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:16:00.000000\t055600_A..S\tA31S\t14 St\t40.740893\t-74.00169\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:22:00.000000\t056200_A..N\tA61N\tRockaway Blvd\t40.680429\t-73.843853\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:31:15.000000\t057125_A..S\tA09S\t168 St\t40.840719\t-73.939561\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:39:00.000000\t057900_A..S\tA07S\t175 St\t40.847391\t-73.939704\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:39:30.000000\t057950_A..N\tA57N\tGrant Av\t40.677044\t-73.86505\tSTOPPED_AT\t2023-05-05 15:48:30.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:47:39.000000\t058765_A..S\tA03S\tDyckman St\t40.865491\t-73.927271\tSTOPPED_AT\t2023-05-05 15:48:41.000\t2023-05-05 15:48:56.000\nA\t8 Avenue Express\t2023-05-05 13:43:00.000000\t058300_A..N\tH08N\tBeach 44 St\t40.592943\t-73.776013\tSTOPPED_AT\t2023-05-05 15:48:40.000\t2023-05-05 15:48:56.000\n",
             "type": "TABLE"
           }
         ]
       },
-      "dateFinished": "2023-05-05T15:18:53+0200"
+      "dateFinished": "2023-05-05T15:46:33+0200"
     },
     {
       "text": "%flink.ssql\n",
