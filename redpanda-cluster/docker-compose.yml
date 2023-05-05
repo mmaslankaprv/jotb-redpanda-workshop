@@ -1,0 +1,112 @@
+version: '3.7'
+name: jotb-redpanda-cluster
+networks:
+  redpanda_network:
+    driver: bridge
+
+volumes:
+  redpanda-0: null
+  redpanda-1: null
+  redpanda-2: null
+
+services:
+  redpanda-0:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.1.8
+    command:
+      - redpanda start
+      - --smp 3
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda-0:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda-0:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda-0:33145
+      - --advertise-rpc-addr redpanda-0:33145
+      - --smp 2
+      - --memory 2G
+      - --mode dev-container
+      - --default-log-level=info
+      - --seeds redpanda-0:33145,redpanda-1:33145,redpanda-2:33145
+    ports:
+      - 8081
+      - 8082
+      - 9092
+      - 9644
+      - 19092:19092
+    volumes:
+      - redpanda-0:/var/lib/redpanda/data
+    networks:
+      - redpanda_network
+  redpanda-1:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.1.8
+    command:
+      - redpanda start
+      - --smp 3
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19093
+      - --advertise-kafka-addr internal://redpanda-1:9092,external://localhost:19093
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda-1:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda-1:33145
+      - --advertise-rpc-addr redpanda-1:33145
+      - --smp 2
+      - --memory 2G
+      - --mode dev-container
+      - --default-log-level=info
+      - --seeds redpanda-0:33145,redpanda-1:33145,redpanda-2:33145
+    ports:
+      - 9644
+      - 19093:19093
+    volumes:
+      - redpanda-1:/var/lib/redpanda/data
+    networks:
+      - redpanda_network
+  redpanda-2:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.1.8
+    command:
+      - redpanda start
+      - --smp 3
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19094
+      - --advertise-kafka-addr internal://redpanda-2:9092,external://localhost:19094
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda-2:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda-2:33145
+      - --advertise-rpc-addr redpanda-2:33145
+      - --smp 2
+      - --memory 2G
+      - --mode dev-container
+      - --default-log-level=info
+      - --seeds redpanda-0:33145,redpanda-1:33145,redpanda-2:33145
+    ports:
+      - 9644
+      - 19094:19094
+    volumes:
+      - redpanda-2:/var/lib/redpanda/data
+    networks:
+      - redpanda_network
+
+  console:
+    image: docker.redpanda.com/redpandadata/console:v2.2.3
+    entrypoint: /bin/sh
+    command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda-0:9092","redpanda-1:9093","redpanda-2:9094"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://redpanda-0:8081"]
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda-0:9644","http://redpanda-1:9644","http://redpanda-2:9644"]
+    ports:
+      - 8888:8080
+    networks:
+      - redpanda_network
+    depends_on:
+      - redpanda-0
+      - redpanda-1
+      - redpanda-2
